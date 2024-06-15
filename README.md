@@ -154,7 +154,10 @@ The diagrams are in markdown format, which can be read directly on Github and in
 
 - Si se renderizan arrays si el contenido de estos son numeros o cadenas. 
 
+
 ##### Uso de componentes   
+
+
 - Se pueden definir en el mismo archivo . Si es en archivo diferente poner `export default Componente` en el archivo e definicion e `import Component from './Componet'`en el archivo deonde se quiera implementar 
 - Una  vez definido se puede utilizar todas las veces que se requiera
     ```jsx
@@ -180,6 +183,7 @@ The diagrams are in markdown format, which can be read directly on Github and in
     ```
 
 ##### Pasar datos a componentes mediante [`props`](https://es.react.dev/learn/passing-props-to-a-component)   
+
 
 - Para definir componentes que contengan varibales externas se las pasamos mediante el objeto `props`como parametro.
 - Dentro del JSX se pondran entre llaves los campos del componente que recibiran contenido desde fuera con la sintaxis `{props.campo}`
@@ -241,7 +245,8 @@ const App = () => {
 
 ### b - Javascript    
 
-#### Variables
+#### Variables   
+
 - Formas de definir variables
     - `var`, forma antigua  de defnir variabnles. Se desaconseja
     - `const`, constante. El valor no puede cambiar
@@ -252,7 +257,8 @@ const App = () => {
 > [var, let y const - Qué, por qué y cómo - Características de JavaScript de ES6](https://youtu.be/sjyJBL5fkp8)
 
 
-#### [Arrays](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array)
+#### [Arrays](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array)   
+
 
 ```js
     
@@ -303,7 +309,7 @@ const App = () => {
         console.log(rest)          // se imprime [3, 4 ,5]
 ```
 
-#### Objetos
+#### Objetos   
 
 - Enrtre las formas de defnir objetos en Javascript esta la de usar [objetos literales](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals). Enuerar las propiedades entre llaves
 ```js
@@ -347,7 +353,7 @@ const App = () => {
         object1['secret number'] = 12341
 ```
 
-#### Funciones
+#### Funciones    
 
 - Definicion de funciones flecha. 
 ```js
@@ -400,7 +406,7 @@ const result = average(2, 5)
 // result ahora es 3.5
 ```
 
-#### Clases
+#### Clases   
 
 
 > [ECMAScript](https://es.wikipedia.org/wiki/ECMAScript), estandar Javascript

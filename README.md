@@ -239,7 +239,8 @@ const App = () => {
 > [ECMAScript 6](http://es6-features.org/#Constants)
 > [JSX](https://es.react.dev/learn/writing-markup-with-jsx)
 
-### b - Javascript   
+### b - Javascript    
+
 #### Variables
 - Formas de definir variables
     - `var`, forma antigua  de defnir variabnles. Se desaconseja
@@ -301,7 +302,9 @@ const App = () => {
         console.log(first, second)  // se imprime 1, 2
         console.log(rest)          // se imprime [3, 4 ,5]
 ```
+
 #### Objetos
+
 - Enrtre las formas de defnir objetos en Javascript esta la de usar [objetos literales](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals). Enuerar las propiedades entre llaves
 ```js
 
@@ -343,7 +346,9 @@ const App = () => {
         object1.address = 'Helsinki'
         object1['secret number'] = 12341
 ```
+
 #### Funciones
+
 - Definicion de funciones flecha. 
 ```js
 
@@ -394,6 +399,7 @@ const average = function(a, b) {
 const result = average(2, 5)
 // result ahora es 3.5
 ```
+
 #### Clases
 
 

@@ -97,7 +97,7 @@ The diagrams are in markdown format, which can be read directly on Github and in
 -  `{a} plus {b} is {a + b}` => `10 plus 20 is 30`
 - Los nombres de los componentes siempre deben comenzar por mayuscula
 
-##### JSX   
+##### JSX   
 
 - Lo que se ve como HTML en el `return`  de la funcion en realidad es JSX
 - JSX es compilado por React a traves de [Babel](https://babeljs.io/repl/) como Javascript. Una vez compilado quedaria asi:
@@ -155,7 +155,7 @@ The diagrams are in markdown format, which can be read directly on Github and in
 - Si se renderizan arrays si el contenido de estos son numeros o cadenas. 
 
 
-##### Uso de componentes   
+#####   Uso de componentes   
 
 
 - Se pueden definir en el mismo archivo . Si es en archivo diferente poner `export default Componente` en el archivo e definicion e `import Component from './Componet'`en el archivo deonde se quiera implementar 
@@ -213,7 +213,9 @@ const App = () => {
 
 ```
 
-#### Posible mensaje de error   
+
+#### Posible mensaje de error  
+
 
 - `name`is missing in props validation eslint, [react/prop-types](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
 - causado por [ESlint](https://es.eslint.org/)
@@ -230,7 +232,7 @@ const App = () => {
 }
 ```
 
-#### Creación mediante React   
+#### Creación mediante React   
 
 - Sin usar Vite, React crea las aplicaciones mediante el comando [`npx create-react-app my_app`](https://github.com/facebookincubator/create-react-app). 
 - En este caso el nombre del  archivo de arranque sera `index.js` y no `main.jsx`. 
@@ -309,7 +311,7 @@ const App = () => {
         console.log(rest)          // se imprime [3, 4 ,5]
 ```
 
-#### Objetos   
+#### Objetos   
 
 - Enrtre las formas de defnir objetos en Javascript esta la de usar [objetos literales](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals). Enuerar las propiedades entre llaves
 ```js
@@ -353,7 +355,7 @@ const App = () => {
         object1['secret number'] = 12341
 ```
 
-#### Funciones    
+#### Funciones    
 
 - Definicion de funciones flecha. 
 ```js
@@ -406,7 +408,7 @@ const result = average(2, 5)
 // result ahora es 3.5
 ```
 
-#### Clases   
+#### Clases   
 
 
 > [ECMAScript](https://es.wikipedia.org/wiki/ECMAScript), estandar Javascript

@@ -208,7 +208,7 @@ const App = () => {
 - `name`is missing in props validation eslint, [react/prop-types](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
 - causado por [ESlint](https://es.eslint.org/)
 - Añadir la   linea `'react/prop-types': 0` al archivo `´`eslintrc.cjs`, en el array `rules`:
-```json annotate
+```json
     ...
    rules: {
      'react-refresh/only-export-components': [

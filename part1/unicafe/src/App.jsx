@@ -10,18 +10,35 @@ const App = () => {
    */
   const handleGoodClick = () => {
     const goodPlus = good + 1;
-     console.log("good", goodPlus);
+    console.log("good", goodPlus);
     setGood(goodPlus);
   };
   const handleNeutralClick = () => {
     const neutralPlus = neutral + 1;
-    console.log('neutral',neutralPlus)
+    console.log("neutral", neutralPlus);
     setNeutral(neutralPlus);
   };
   const handleBadClick = () => {
     const badPlus = bad + 1;
-     console.log("bad", badPlus);
+    console.log("bad", badPlus);
     setBad(badPlus);
+  };
+  const total = () => bad + neutral + good;
+  const score = {
+    good: 1,
+    neutral: 0,
+    bad: -1,
+  };
+  const average = () => {
+    if (total() === 0) return 0;
+    return (
+      (good * score.good + neutral * score.neutral + bad * score.bad) / total()
+    );
+  };
+  
+  const goodPercentage = () => {
+    if (total() === 0) return 0;
+    return (good / total()) * 100;
   };
   return (
     <div>
@@ -33,6 +50,9 @@ const App = () => {
       <p>good: {good}</p>
       <p>neutral: {neutral}</p>
       <p>bad: {bad}</p>
+      <p>all: {total()}</p>
+      <p>average: {average()}</p>
+      <p>positive:{goodPercentage() } % </p>
     </div>
   );
 };

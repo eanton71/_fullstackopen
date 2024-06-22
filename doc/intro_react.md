@@ -156,7 +156,7 @@
 
 #### Uso de componentes
 
-- Se pueden definir en el mismo archivo . Si es en archivo diferente poner `export default Componente` en el archivo e definicion e `import Component from './Componet'`en el archivo deonde se quiera implementar
+- Se pueden definir en el mismo archivo . Si es en archivo diferente poner `export default Componente` en el archivo e definicion e `import Component from './Component'`en el archivo deonde se quiera implementar
 - Una vez definido se puede utilizar todas las veces que se requiera
 
   ```jsx
@@ -878,7 +878,8 @@ const App = () => {
 - Si queremos gstionar un evneto a traves de un boton tenemmos que hacer una funcion para controlar la accion que se realiza dado el evento
 - Esta funcion es el manejadr de eventos
 - Siempre debe ser una funcion o referencia a una funcion 
-- No sirve con poner el cidigo en el onClick del button
+- No sirve con poner el codigo en el onClick del button
+- No poner la funcion de estado ->  provoca que se renderice de nuevo el componente
 - Una opcion es:
 ```jsx
     const handleZeroClick = () => {
@@ -893,6 +894,7 @@ const App = () => {
 ```
 
 ### Funciónes que devuelven   funciónes ? &#128125;
+
 
 ### Pasando controladores de eventos a componentes hijos
 

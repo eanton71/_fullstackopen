@@ -24,21 +24,14 @@ const App = () => {
     console.log("bad", badPlus);
     setBad(badPlus);
   };
- 
+
   return (
     <div>
       <h1>give feedback</h1>
       <Button handleClick={handleGoodClick} text="good" />
       <Button handleClick={handleNeutralClick} text="neutral" />
       <Button handleClick={handleBadClick} text="bad" />
-  <Statistics good={good} neutral={neutral} bad = {bad} />
-     {/*  <h2>statistics</h2>
-      <p>good: {good}</p>
-      <p>neutral: {neutral}</p>
-      <p>bad: {bad}</p>
-      <p>all: {total()}</p>
-      <p>average: {average()}</p>
-      <p>positive:{goodPercentage() } % </p> */}
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };

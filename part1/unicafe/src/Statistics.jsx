@@ -27,15 +27,17 @@ const Statistics = ({ good, neutral, bad }) => {
   if (!total()) return <p>No feedback given</p>
   //hay estadisticas las mostramos
   return (
-    <div>
-      <h2>statistics</h2>
-      <StatisticLine text='god' value={good} /> 
-      <StatisticLine text='neutral' value={neutral} />
-      <StatisticLine text='bad' value={bad} />
-      <StatisticLine text='all:' value={total()} />
-      <StatisticLine text='average:' value={average()} />
-      <StatisticLine text='positive:' value={goodPercentage()+' %'} /> 
-    </div>
+    <table>
+      <tbody>
+        
+        <StatisticLine text="god" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all:" value={total()} />
+        <StatisticLine text="average:" value={average()} />
+        <StatisticLine text="positive:" value={goodPercentage() + " %"} />
+      </tbody>
+    </table>
   );
 };
 export default Statistics;

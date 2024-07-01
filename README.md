@@ -4,8 +4,11 @@
 
 
 0. [Part 0: Fundamentos de las aplicaciones web](./doc/fundamentos.md)
+- Exercices: [part0](https://github.com/eanton71/_fullstackopen/tree/main/part0)
 1. [Part 1: Introduccion a React](./doc/intro_react.md)
-
+- Exercices:
+  -  [part1-courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part1/courseinfo)
+  -  [part1-unicafe](https://github.com/eanton71/_fullstackopen/tree/main/part1/unicafe)
 
 #### Problemas
 Archivo DS_store en mac

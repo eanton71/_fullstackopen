@@ -9,31 +9,35 @@ const App = () => {
   /**
    * Manejadores
    */
-  const handleGoodClick = () => {
-    const goodPlus = good + 1;
-    console.log("good", goodPlus);
-    setGood(goodPlus);
-  };
-  const handleNeutralClick = () => {
-    const neutralPlus = neutral + 1;
-    console.log("neutral", neutralPlus);
-    setNeutral(neutralPlus);
-  };
-  const handleBadClick = () => {
-    const badPlus = bad + 1;
-    console.log("bad", badPlus);
-    setBad(badPlus);
+ 
+  const handle = {
+    good: () => {
+      const goodPlus = good + 1;
+      console.log("good", goodPlus);
+      setGood(goodPlus);
+    },
+    neutral: () => {
+      const neutralPlus = neutral + 1;
+      console.log("neutral", neutralPlus);
+      setNeutral(neutralPlus);
+    },
+    bad: () => {
+      const badPlus = bad + 1;
+      console.log("bad", badPlus);
+      setBad(badPlus);
+    },
   };
 
   return (
     <div>
       <h1>give feedback</h1>
-      <Button handleClick={handleGoodClick} text="good" />
-      <Button handleClick={handleNeutralClick} text="neutral" />
-      <Button handleClick={handleBadClick} text="bad" />
+      <Button handleClick={handle["good"]} text="good" />
+      <Button handleClick={handle["neutral"]} text="neutral" />
+      <Button handleClick={handle["bad"]} text="bad" />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
 
 export default App;
+ 

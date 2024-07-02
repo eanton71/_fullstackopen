@@ -26,7 +26,7 @@ const App = () => {
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
-  
+
   /**
    * manejador random
    */
@@ -35,23 +35,33 @@ const App = () => {
     setSelected(n);
   };
   /**
-   * menajador para votar el elemento del array anecdotes seleccionado
-   * 
+   * manejador para votar el elemento del array anecdotes seleccionado   * 
    */
   const handleVote = () => {
-    const rank = { ...votes };
+    const rank = [ ...votes ];
     rank[selected] += 1;
-    console.log(rank);
     setVotes(rank);
   };
+  /**
+   * 
+   * @returns indice del elemento del array votes con mas puntuacion
+   */
+  const indexMaxVoted = () => {
+    const max = Math.max(...votes);
+    return votes.indexOf(max);
+  }
   return (
     <div>
-        {anecdotes[selected]}
-        <br />
-        has {votes[selected]} votes
+      <h1>Anecdote of the day</h1>
+      {anecdotes[selected]}
+      <br />
+      has {votes[selected]} votes
       <br />
       <Button handleClick={handleVote} text="vote" />
       <Button handleClick={handleNext} text="next anecdote" />
+      <br />
+      <h2>Anecdotes with most votes</h2>
+      {anecdotes[indexMaxVoted()]}
     </div>
   );
 };

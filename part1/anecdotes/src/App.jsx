@@ -26,6 +26,7 @@ const App = () => {
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
+  
   /**
    * manejador random
    */

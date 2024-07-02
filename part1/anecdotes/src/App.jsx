@@ -14,19 +14,43 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  /**
+   * array de 0s del mismo tamaño que el array anecdotes 
+   */
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
+  /**
+   * de MDN 
+   * @param {*} max 
+   * @returns un entero entre 0 y max -1 
+   */
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
-  const handle = () => {
-    const n = getRandomInt(anecdotes.length - 1);
+  /**
+   * manejador random
+   */
+  const handleNext = () => {
+    const n = getRandomInt(anecdotes.length);
     setSelected(n);
   };
-
+  /**
+   * menajador para votar el elemento del array anecdotes seleccionado
+   * 
+   */
+  const handleVote = () => {
+    const rank = { ...votes };
+    rank[selected] += 1;
+    console.log(rank);
+    setVotes(rank);
+  };
   return (
     <div>
-      {anecdotes[selected]}
+        {anecdotes[selected]}
+        <br />
+        has {votes[selected]} votes
       <br />
-      <Button handleClick={handle} text="next anecdote" />
+      <Button handleClick={handleVote} text="vote" />
+      <Button handleClick={handleNext} text="next anecdote" />
     </div>
   );
 };

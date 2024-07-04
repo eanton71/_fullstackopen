@@ -49,7 +49,8 @@ const App = () => {
     },
   ];
 /**
- * Le pasamos toda la coleccion
+ * Ahora courses tiene varias colecciones con name :curso, id y array de parts: materias de cada curso
+ * Course esta en un modulo separado en la carpeta components
  */
   return (
     <>

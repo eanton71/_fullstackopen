@@ -1,6 +1,9 @@
 import Course from "./components/Course";
 
 const App = () => {
+  /**
+   * datos
+   */
   const course = {
     id: 1,
     name: 'Half Stack application development',
@@ -22,18 +25,11 @@ const App = () => {
       }
     ]
   }
-
+/**
+ * Le pasamos toda la coleccion
+ */
   return <Course course={course} />
-/* 
-  return (
-    <div>
-      <Header course={course} />
-      <Content parts={parts} />
-      <Total
-        sum={parts[0].exercises + parts[1].exercises + parts[2].exercises}
-      />
-    </div>
-  ); */
+ 
 };
 
 export default App;

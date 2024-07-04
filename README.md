@@ -10,9 +10,9 @@
      -  [part1/courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part1/courseinfo)
      -  [part1/unicafe](https://github.com/eanton71/_fullstackopen/tree/main/part1/unicafe)
      -  [part1/anecdotes](https://github.com/eanton71/_fullstackopen/tree/main/part1/anecdotes)
-2. [Parte 2: Comuicandose con el servidor](./doc/comunica_servidor.md)  
+2. [Parte 2: Comuicandose con el servidor](./doc/comunica_servidor.md)
       - Ejercicios:
-     - 
+        - [part2/courseinfo]
 
 #### Problemas
 

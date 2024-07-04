@@ -1,9 +1,13 @@
 import Part from "./Part";
+import Total from "./Total";
 const Content = ({ parts }) => (
   <>
-    <Part part={parts[0]} />
-    <Part part={parts[1]} />
-    <Part part={parts[2]} />
+    {/* Renderizamos la coleccion parts */}
+    {parts.map((part) => (
+      <Part key={part.id} part={part} />
+    ))}
+    {/* Calculo del total de exercices */}
+    <Total parts={parts} />
   </>
 );
 export default Content;

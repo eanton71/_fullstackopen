@@ -18,7 +18,9 @@
   - [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). crea una copia sueprficial de una parte de un array cumpiendo las condiciones dadas por callback
     - `arrFilter = arr.filter(callbackFn)` `...thisArg)`
   - [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) Crea un nuevo array tansformando cada aelemento a partir del array existente
-  -    - `newArr = arr.map(callbackFn)` `...thisArg)`
+      - `newArr = arr.map(callbackFn)` `...thisArg)`
+  - [reduce](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
+    - `sumWithInitial = array1.reduce((accumulator, currentValue) => accumulator + currentValue,  initialValue,)` 
 - [Programación funcional en JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84)
 ### Renderizar colecciones (arrays de objetos indexados)
 - La funcion `map`de Javascript nos permite renderizar colecciones y arrays de forma sencilla modicficando cada elemento y dandole el formato que queramos

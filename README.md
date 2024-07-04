@@ -3,16 +3,35 @@
 ### Enrique Anton Lopez
 
 
-0. [Part 0: Fundamentos de las aplicaciones web](./doc/fundamentos.md)
-- Exercices: [part0](https://github.com/eanton71/_fullstackopen/tree/main/part0)
-1. [Part 1: Introduccion a React](./doc/intro_react.md)
-- Exercices:
-  -  [part1-courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part1/courseinfo)
-  -  [part1-unicafe](https://github.com/eanton71/_fullstackopen/tree/main/part1/unicafe)
-  -  [part1-anecdotes](https://github.com/eanton71/_fullstackopen/tree/main/part1/anecdotes)
+0. [Parte 0: Fundamentos de las aplicaciones web](./doc/fundamentos.md)
+   - Exercices: [part0](https://github.com/eanton71/_fullstackopen/tree/main/part0)
+1. [Parte 1: Introduccion a React](./doc/intro_react.md)
+   - Exercices:
+     -  [part1/courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part1/courseinfo)
+     -  [part1/unicafe](https://github.com/eanton71/_fullstackopen/tree/main/part1/unicafe)
+     -  [part1/anecdotes](https://github.com/eanton71/_fullstackopen/tree/main/part1/anecdotes)
+2. [Parte 2: Comuicandose con el servidor](./doc/comunica_servidor.md)  
+      - Ejercicios:
+     - 
 
 #### Problemas
-Archivo DS_store en mac
+
+##### Posible mensaje de error
+
+- `name`is missing in props validation eslint, [react/prop-types](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
+- causado por [ESlint](https://es.eslint.org/)
+- Añadir la linea `'react/prop-types': 0` al archivo `´`eslintrc.cjs`, en el array `rules`:
+
+```json
+    rules: {
+     'react-refresh/only-export-components': [
+       'warn',
+       { allowConstantExport: true },
+     ],
+     'react/prop-types': 0
+   },
+```
+##### Archivo DS_store en mac
 
 ```
 Remove existing .DS_Store files from the repository:
@@ -29,4 +48,6 @@ Then commit the file to the repo:
 git add .gitignore
 git commit -m '.DS_Store banished!'
 ```
-https://stackoverflow.com/questions/107701/how-can-i-remove-ds-store-files-from-a-git-repository
+
+> [https://stackoverflow.com/questions/107701/how-can-i-remove-ds-store-files-from-a-git-repository](how-can-i-remove-ds-store-files-from-a-git-repository)
+

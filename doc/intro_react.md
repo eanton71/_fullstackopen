@@ -1,4 +1,4 @@
-# Part 1 Introducción a React
+# Parte 1 Introducción a React
 
 ## a - Introduccion a React
 
@@ -244,24 +244,26 @@ const App = () => {
   );
 };
 ```
-
-### Posible mensaje de error
-
-- `name`is missing in props validation eslint, [react/prop-types](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
-- causado por [ESlint](https://es.eslint.org/)
-- Añadir la linea `'react/prop-types': 0` al archivo `´`eslintrc.cjs`, en el array `rules`:
-
-```json
-    rules: {
-     'react-refresh/only-export-components': [
-       'warn',
-       { allowConstantExport: true },
-     ],
-     'react/prop-types': 0
-   },
+#### No renderizar objetos <span style='color:red;'>NO objetos entre llaves  &#10060;</span>
+```jsx
+const App = () => {
+  const friends = [
+    { name: 'Peter', age: 4 },
+    { name: 'Maya', age: 10 },
+  ]
+  return (
+    <div>
+      <p>{friends[0]}</p>
+      <p>{friends[1]}</p>
+    </div>
+  )
+}
+export default App
 ```
+-ERROR: <span style='color:red;'>`Objects are not valid as React child`</span>
+- Entre llaves solo se renderizan datos primitivos obtenidos directamente , at traves de funciones, etc...  <span style='color:red;'>NO OBJETOS</span> `friends[0]` <span style='color:green;'>SI DATOS PRIMITIVOS</span> `friends[0].name`
 
-### Creación mediante React
+### Creación de aplicaciones mediante React
 
 - Sin usar Vite, React crea las aplicaciones mediante el comando [`npx create-react-app my_app`](https://github.com/facebookincubator/create-react-app).
 - En este caso el nombre del archivo de arranque sera `index.js` y no `main.jsx`.
@@ -271,7 +273,7 @@ const App = () => {
 
 ## b - Javascript
 
-### Variables
+### Variables
 
 - Formas de definir variables
   - `var`, forma antigua de defnir variabnles. Se desaconseja

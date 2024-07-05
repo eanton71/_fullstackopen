@@ -138,8 +138,136 @@ const App = ({ notes }) => {
 }
 ```
 ## b Formularios
+### Guardar notas en  le estado del componente
+- En la aplicacione de notas, si queremos añadir nuevas notas las podemos almacenar eln el estado
+- Inicializamos el array notes con el array que se encuentra en Main.jsx
+- TAmbien se podria empezar con una lista vacia `useState([])` y omitir el paramtro `props`
+- 
+```jsx
+import { useState } from 'react'
+import Note from './components/Note'
 
+const App = (props) => {
+  const [notes, setNotes] = useState(props.notes)
 
+  return (
+    <div>
+      <h1>Notes</h1>
+      <ul>
+        {notes.map(note => 
+          <Note key={note.id} note={note} />
+        )}
+      </ul>
+    </div>
+  )
+}
+export default App 
+```
+- Añadimos un formulario con un input para añadir nuevas notas
+- Tambien una funcion asociada la formaulario
+```jsx
+const App = (props) => {
+  const [notes, setNotes] = useState(props.notes)
+
+  const addNote = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+  }
+  return (
+    <div>
+      <h1>Notes</h1>
+      <ul>
+        {notes.map(note => 
+          <Note key={note.id} note={note} />
+        )}
+      </ul>
+      <form onSubmit={addNote}>
+        <input />
+        <button type="submit">save</button>
+      </form>   
+    </div>
+  )
+}
+```
+- Por ahora la funcion `addNote`  solo muestra el lemento por consola `console.log('button clicked', event.target)`  que recibe el evento `event`que entra por parametro
+### [Componentes controlados](https://es.react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable) 
+- React necesita tener el valor en todo momento del input debido a los dirferentes renderizados que se pueden hacer 
+- La forma d hacerlo es crear un estado para el input , en este caso  un string `newNote`
+```jsx
+    ...
+    const [notes, setNotes] = useState(props.notes)
+    const [newNote, setNewNote] = useState(
+      'a new note...'
+    )
+    ... 
+```
+- Y tenemos que añadirlo como prop en el atributo value del input
+```jsx
+     <form onSubmit={addNote}>
+        <input value={newNote} />
+        <button type="submit">save</button>
+      </form>   
+```
+- Pero tambien tenemos que añadirle un manejador que actualize el estado newNote cada vez que cambie el contenido del input
+```jsx
+    ...
+    const handleNoteChange = (event) => {
+      console.log(event.target.value)
+      setNewNote(event.target.value)
+    }
+    ...
+    (...
+    <input
+      value={newNote}
+      onChange={handleNoteChange}
+    />
+    ...)
+```
+- Para que se termine qde guardar la nota debemos completar la funcion addNote
+- Se crea un objeto con el campo e texto del input, un campo importatnt aleatorio por ahora y un id incrementado
+- El objeto se concatena al array notes mediante la funcion de estado `setNotes` 
+- `concat` crea un nueva copia del array con el elemento nuevo   BIEN , yaque el estado no dsedebe mutrtrar directamente
+- Pone a "" el input con `setNewNote`
+```jsx
+const addNote = (event) => {
+  event.preventDefault()
+  const noteObject = {
+    content: newNote,
+    important: Math.random() < 0.5,
+    id: notes.length + 1,
+  }
+
+  setNotes(notes.concat(noteObject))
+  setNewNote('')
+}
+```
+### Filtrar loque se quiere mostrar
+- Qeremos filtrar segun el atributo importatnt que es booleano. Añadimos un estado booleano
+```jsx
+const [showAll, setShowAll] = useState(true)
+```
+- Y cambiamos el array que se mostrara en el map segun si el estado `showAll` es true o false
+- Esto es un condicional: en `notesToShow` se guardara dependiendo de la condicion `showAll`. Si es true sera igual a notes, si es false ser hara un filtrado por las notas importantes (metodo filter de Array) 
+- El operador `===`se asegura de que la compracion se haga de forma [estricta](https://developer.mozilla.org/es/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+```jsx
+  const notesToShow = showAll
+    ? notes
+    : notes.filter(note => note.important === true)
+```
+- TEnemos que ñadir un boton que permita cambiar el estado `showAll` al usuario
+- Ya contien un manejador dentro del evento OnClick. Es una funcion simple que cambia de `showAll` de true a false y viceversa
+- Dentro del boton se mostrar el texto important si la condicion `showAll` es true o all si es false
+```jsx
+  return (
+    <div>
+      <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? 'important' : 'all' }
+        </button>
+      </div>
+      ...
+```
 ## c Obteniedo datos del servidor
 
 ## d Alterando datos en el servidor

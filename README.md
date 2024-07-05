@@ -4,15 +4,15 @@
 
 
 0. [Parte 0: Fundamentos de las aplicaciones web](./doc/fundamentos.md)
-   - Exercices: [part0](https://github.com/eanton71/_fullstackopen/tree/main/part0)
+   - Ejercicios: [part0](https://github.com/eanton71/_fullstackopen/tree/main/part0)
 1. [Parte 1: Introduccion a React](./doc/intro_react.md)
-   - Exercices:
-     -  [part1/courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part1/courseinfo)
-     -  [part1/unicafe](https://github.com/eanton71/_fullstackopen/tree/main/part1/unicafe)
-     -  [part1/anecdotes](https://github.com/eanton71/_fullstackopen/tree/main/part1/anecdotes)
+   - Ejercicios:
+     -  [part1/courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part1/courseinfo), 1.1-1.5
+     -  [part1/unicafe](https://github.com/eanton71/_fullstackopen/tree/main/part1/unicafe), 1.6-1.11
+     -  [part1/anecdotes](https://github.com/eanton71/_fullstackopen/tree/main/part1/anecdotes), 1.12-1.14
 2. [Parte 2: Comuicandose con el servidor](./doc/comunica_servidor.md)
       - Ejercicios:
-        - [part2/courseinfo]
+        - [part2/courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part2/courseinfo) , 2.1-2.5
 
 #### Problemas
 

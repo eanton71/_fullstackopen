@@ -1,9 +1,16 @@
 import { useState } from "react";
 
 const App = () => {
+  //estado con array de personas
   const [persons, setPersons] = useState([{ name: "Arto Hellas", number:"123456789",id:1}]);
+  //estado para input name en formulario
   const [newName, setNewName] = useState("");
+  //estado para input number en formulario
   const [newNumber, setNewNumber] = useState("");
+  //estado para input de busqueda
+  const [filter, setFilter] = useState("");
+
+  
   /**
    * añadir persona al array persons
    * @param {*} event 
@@ -31,6 +38,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <input
+        value={filter}
+        onChange={(event) => setFilter(event.target.value)}
+      />
+      <h2>Add a new</h2>
       {/*formulario con el input para añadir peronas */}
       <form onSubmit={addPerson}>
         <div>
@@ -52,9 +64,14 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {/*renderizar  array persons mediante map */}
-      {persons.map((person) => (
-        <p key={person.id}>{person.name} {person.number}</p>
+      {/*renderizar  array persons mediante map , prevismante hace un filtrado
+      para que solo muestre los que coinciden con el input asociado al estado filter*/}
+      {persons
+        .filter((person) => person.name.toLowerCase().includes(filter))
+        .map((person) => (
+        <p key={person.id}>
+          {person.name} {person.number}
+        </p>
       ))}
       <div>debug: {newName}</div>
     </div>

@@ -269,7 +269,184 @@ const [showAll, setShowAll] = useState(true)
       ...
 ```
 ## c Obteniedo datos del servidor
+- Instalaremos [JSON Server](https://github.com/typicode/json-server) para entender comop se comunica el frontend con el backend
+- creamos un archivo `db.json`een la raiz del proyecto:
+```json
+{
+  "notes": [
+    {
+      "id": 1,
+      "content": "HTML is easy",
+      "important": true
+    },
+    {
+      "id": 2,
+      "content": "Browser can execute only JavaScript",
+      "important": false
+    },
+    {
+      "id": 3,
+      "content": "GET and POST are the most important methods of HTTP protocol",
+      "important": true
+    }
+  ]
+}
+```
+- Instalacion global
+  - `npm install -g json-server`
+- Ejecutar `json-server`
+  - `json-server --port 3001 --watch ./directorio/db.json`
+- Si hacemos la instalacion local, sin `-g`, para ejecutar el servidor
+  - `npx json-server --port 3001 --watch db.json`
+- Si vamos a `http://localhost:3001/notes`,en el navegador, nos mostrara el achivo `db.json`en formato `json`
+- Segun que navegador , no lo muestra bonito, por si acaso se ppuede instalar:
+  - [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc)
+- Este servidor nos permitira guardar os datos en el archivo json de la mima manera que una base de datos en un servidor
+### Obtenidendo datos desde el frontend
+- La manera antigua de obtener datso del servidor era mediante [XMLHttpRequest](https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest), solicitud HTTP mediante objeto XHR
+- Se usa desde 1999,a unque ya no se recomienda
+- Ahora se usa el metodo [fetch](https://developer.mozilla.org/es/docs/Web/API/fetch), basdo en [promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+```js
+const xhttp = new XMLHttpRequest()
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    const data = JSON.parse(this.responseText)
+    // handle the response that is saved in variable data
+  }
+}
+xhttp.open('GET', '/data.json', true)
+xhttp.send()
+```
+- Con XHR 
+1. Se registraba un controlador de eventos `onreadystatechange` 
+2. La solicitud se envia al servidor `open`, `send`
+3. el controlador se ejecuta de forma `asincrona`, esto ses cuando haya un cambio 
 
+- En Java se puede hacer esto pero de forma sincrona. Priemro eera a quque llegue el resultado de la solicitud HTTP para despues almacenarlas en una variable y procesarlas
+- Los motores Javasccript funcionan de forma [asincrona](https://developer.mozilla.org/es/docs/Web/JavaScript/Event_loop)
+  - Casi todas las [operaciones  IO](https://es.wikipedia.org/wiki/Perif%C3%A9rico_de_entrada/salida) son no bloquieantes. El codigo continua au cuando no hayan concoluido los resultados de las demas operaciones
+  - Cuando finazlia una operaion asincrona, el motor javascript llma a los controladores de eventso registrados en la operacion
+  - Los motores javascript manejan un solo hilo ( no ejecutan codigo en paralelo), por tanto es necesario el modo sin bloqueo, ya que le navegador se quedaria `pillado`, `congelado` <span  >&#10052;</span>
+  - Si alguna ioperacion require mucho tiempo por si mima  &#128164; (bucles que se alargan) , el navegador se atascara
+    - Ningun calculo individual deberia llevar mucho tiempo &#128128;
+  - Los [web workers](https://developer.mozilla.org/es/docs/Web/API/Web_Workers_API/Using_web_workers) permiten la ejecucion de codigo paralelo, pero una ventana individual es manadjada por un solo hilo
+> Ver:
+> [¿Qué diablos es el ciclo del evento de todos modos?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+
+### Obtener datos del servidor mediante fetch o axios
+- Se puede usar [`fetch`](https://developer.mozilla.org/es/docs/Web/API/fetch). Es estandar y compatible con todos los naveegadores
+- Usaremos [`axios`](https://github.com/axios/axios). Se innstala medinate npm
+- [`npm`](https://docs.npmjs.com/about-npm) es el gestor de paquetes de Node.js
+- Los proyectos que usan `npm`tienen un archivo `package.json`en su raiz donde se configuran varias cosas de la instalacion de estos paquetes
+- La libreria axios se podria definir eln el apartado dependencies de package.json pero tsambien se puede instalar desde consola: `npm install axios`. De esta  forma axios se incluira en `package.json`, `dependencies`. El codigo quedara instalado en la caprepeta `node_modules`
+### Configuracion JSON Server
+- Instalamos JSON Server para usarlo solo durante desarrollo
+- `npm install json-server --save-dev`
+- y añadimos en el apartado `scripts`de `package.json`
+```json
+{
+  // ... 
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "server": "json-server --port 3001 --watch ./src/db.json"
+  },
+}
+```
+- De esta manera se  puede iniciar json-server mediante el comando `npm run server`
+### Axios y promesas
+- Ya tenemos el servidor json en marcha. Lo debemos haber ejecutado desde un terminal nuevo para no tener que parar el servidor de React
+- Si agreagamos esto en `main.jsx`
+```jsx
+import axios from 'axios'
+
+const promise = axios.get('http://localhost:3001/notes')
+console.log(promise)
+
+const promise2 = axios.get('http://localhost:3001/foobar')
+console.log(promise2)
+```
+- LA consola de localhost:5173 nos devuelve una [promesa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+  - Objetoi que representa la eventual finazlizacion o falla de una operacion asincrona
+  - Puede tener 3 estados distintos:
+    - pendiente (pending): valor final o uno de los dos siguientes no esta disponible aun
+    - cumplida (fullfilled): operacion completada, el valor finalesta dispopnible
+    - rechazada (rejected): un error impidio obtener el valor final
+  - En el ejemplo, la prioomesa que llama a 'http://localhost:3001/notes' estra cumplida, este enlace existe y corresponde a db.json
+  - LA segunda esta rechazada ya que la direccion es inexistente
+  - Para acceder eal resultado de la promesa lo jhacemos mediante el metdo `then`
+    - `promise.then(response => {  console.log(response)})`
+    - Esto imprime la respuesta por consola. Esta respuesta es un objeto `response` que continene: los datos devueltos, el `status code`y encabezados `headers`
+```jsx
+        axios
+        .get("http://localhost:3001/notes")
+        .then((response) => {
+          const notes = response.data;
+          console.log(notes);
+        });
+```
+- Des ta manera obtenemos dsolo los datos que nos interesan . Es mas legible colocar cada llamada en uan linea dirferente
+- Podriamos passr los datos  al componente App, pero es osseria un problema  porque hay queesperar la respuiesta para poder renderizarlo del todo. En vez de eso pondremoss la bvusqueda de datos en el componete App
+### Effect-hooks, sincroizcion con sistemas externos
+- Para ello usaremos el hook `useEffect`. Permite conectar y sinrnizar con sistemas externos como: red, DOM del navegador, animaciones, codigo difretne de REact,...
+- Ahora podeos simplificar `main.jsx`
+```jsx
+import ReactDOM from "react-dom/client";
+import App from "./App";
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+```
+- Y en `App.jsx`
+```jsx
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Note from './components/Note'
+
+
+const App = () => {
+  const [notes, setNotes] = useState([])
+  const [newNote, setNewNote] = useState('')
+  const [showAll, setShowAll] = useState(true)
+
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/notes')
+      .then(response => {
+        console.log('promise fulfilled')
+        setNotes(response.data)
+      })
+  }, [])
+  console.log('render', notes.length, 'notes')
+
+  // ...
+}
+```
+- LA ejecucion imprime por consola:
+```
+render 0 notes
+effect
+promise fulfilled
+render 3 notes
+```
+1. el componenete se renderiza, se imprime render 0 notes, ya que aun no tenemos los datos
+2. La funcion que esta contenida dentro deuseEfect se ejecuta despues de la renderizacion
+3. Se imprime `'effect'` por consola
+4. axios.get busca los datos en el servidor `'http://localhost:3001/notes'`
+5. registra la funcion:
+   ```jsx
+   response => { 
+    console.log('promise fulfilled')
+    setNotes(response.data)}
+    ```
+     en el controlador de eventos con `then`
+6. Cuando llegan los datos se ejecuta esta funcion. Se imprime `'promise fullfilled'` y se ejecuta `setNotes`
+7. Esta funcion de actuzaliacion de estado renderiza de nuevo el componetne y tambien los  datos que ya estan en la varaible deestado `notes`
+- La funcion useEffect tiene dos parametros: el primero es la funcion que ejerce el efecto y el segundo es la [frecuencia](https://es.react.dev/reference/react/useEffect#parameters) de ejecucion de la funcion, que en est caso es una matriz vacia `[]`. El efecto en este caso solo se ejecuta con el primer renderizado  
+### Diagrama de ejecucion 
+ ![diagrama ejecucion 2c](2c-entorno.svg) 
 ## d Alterando datos en el servidor
 
 ## e Estilos en React

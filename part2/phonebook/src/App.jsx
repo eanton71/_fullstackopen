@@ -1,22 +1,33 @@
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
   //estado con array de personas
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456", id: 1 },
-    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
-    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
-    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-  ]);
+  const [persons, setPersons] = useState([]);
   //estado para input name en formulario
   const [newName, setNewName] = useState("");
   //estado para input number en formulario
   const [newNumber, setNewNumber] = useState("");
   //estado para input de busqueda
   const [filter, setFilter] = useState("");
+
+/**
+ * llamada a la base d datos json 
+ * get locahost 3001 persons
+ * then response a controlador de eventos
+ * setPErsons actuzalizar render app
+ */
+  useEffect(() => {
+    console.log("effect");
+    axios.get("http://localhost:3001/persons").then((response) => {
+      console.log("promise fulfilled");
+      setPersons(response.data);
+    });
+  }, []);
+  console.log("render", persons.length, "persons");
 
   /**
    * añadir persona al array persons

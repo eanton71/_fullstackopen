@@ -14,7 +14,28 @@
       - Ejercicios:
         - [part2/courseinfo](https://github.com/eanton71/_fullstackopen/tree/main/part2/courseinfo) , 2.1-2.5
 
-#### Problemas
+
+#### Instalaciones
+##### Crear aplicacion en React con Vite
+- [intro React](https://github.com/eanton71/_fullstackopen/blob/main/doc/intro_react.md#a---introduccion-a-react)   
+##### Instalar servidor JSON
+- [Parte 2, configuracion JSON Server]()
+`npm install json-server --save-dev`
+##### Instalar axios
+- [Parte 2, configuracion JSON Server]()
+`npm install axios`
+Modificar `package.json`
+```json
+"scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "server": "json-server --port 3001 --watch db.json"
+  },
+  ```
+
+#### Problemas y soluciones
 
 ##### Posible mensaje de error
 
@@ -31,6 +52,9 @@
      'react/prop-types': 0
    },
 ```
+##### Puertos ocupados
+Cannot bind to the port 3001. Please specify another port number either through --port argument or through the json-server.json configuration file
+- YA hay un servicio ejecutandose en ese puerto, parapra ese ervicio, configurar con otro `puerto, eteccc
 ##### Archivo DS_store en mac
 
 ```

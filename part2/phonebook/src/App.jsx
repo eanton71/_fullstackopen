@@ -40,16 +40,19 @@ const App = () => {
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      //si no esta lo añadimos
+      //si no esta lo añadimos, no meter id
       const personObject = {
         name: newName,
         number: newNumber,
-        id: persons.length + 1,
+        //id: persons.length + 1,
       };
-
-      setPersons(persons.concat(personObject));
-      setNewName("");
-      setNewNumber("");
+    axios.post("http://localhost:3001/persons", personObject).then((response) => {
+      console.log(response);
+          setPersons(persons.concat(personObject));
+          setNewName("");
+          setNewNumber("");
+    });
+  
     }
   };
   /***

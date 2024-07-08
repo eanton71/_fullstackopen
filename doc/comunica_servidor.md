@@ -138,7 +138,7 @@ const App = ({ notes }) => {
 }
 ```
 ## b Formularios
-### Guardar notas en  le estado del componente
+### Guardar notas en  el estado del componente
 - En la aplicacione de notas, si queremos añadir nuevas notas las podemos almacenar eln el estado
 - Inicializamos el array notes con el array que se encuentra en Main.jsx
 - TAmbien se podria empezar con una lista vacia `useState([])` y omitir el paramtro `props`
@@ -448,5 +448,208 @@ render 3 notes
 ### Diagrama de ejecucion 
  ![diagrama ejecucion 2c](2c-entorno.svg) 
 ## d Alterando datos en el servidor
+### [Rest](https://es.wikipedia.org/wiki/Transferencia_de_Estado_Representacional)
+- En Rest se utiulzian recursos que tineen asociadoa ua direccion unica, una URL
+- El recurso /notes/3 nos daria una nota unica donde 3 es el id del recurso
+- /notes nos  daria todas las notas
+- EStos recursos se obtienen del servidor mediante HTTP GET
+- HTTP GET /notes/3 nos devuelve las nota con el id 3
+- HTTP GET /notes devuelve todas las notas
+- Json-server require el envo en formato JSON. LA solicitud debe tener el Content-Type con el valor application/json
+### Enviar datos al servidor
+- Para enviar datos al servidor se utiliza HTTP POST. Modifcamos addNote para crear  uan nueva nota pero sin el atributo `id`, ya se encarga el servidor de proporcionarlo
+  ```jsx
+  addNote = event => {
+    event.preventDefault()
+    const noteObject = {
+      content: newNote,
+      important: Math.random() < 0.5,
+    }
 
+    axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        console.log(response)
+      })
+  }
+  ```
+- En la consola se mostrara el objeto response. Podemos ver que status code es 201 (created) .
+- Si nos vamos a Netowrk . En payload se muestran los datos que se han enviado  para guardar
+- En la pestaña response se  muestra la respuesta del servidor
+PAra que se actuzlice el estado tenemos que añadir :
+  ```jsx
+    axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        setNotes(notes.concat(response.data))
+        setNewNote('')
+      })
+  }
+  ```
+### Cambiar la impòrtancia de las notas
+- Añadimos un botn al componente Note para cambioar la importancia de las notas
+  ```jsx
+  const Note = ({ note, toggleImportance }) => {
+    const label = note.important
+      ? 'make not important' : 'make important'
+
+    return (
+      <li>
+        {note.content} 
+        <button onClick={toggleImportance}>{label}</button>
+      </li>
+    )
+  }
+  ```
+- En App.jsx añadimos la funcion toggleImportanceOf que pasaremos a Note
+  ```jsx
+  const toggleImportanceOf = id => {
+    const url = `http://localhost:3001/notes/${id}`
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    axios.put(url, changedNote).then(response => {
+      setNotes(notes.map(note => note.id !== id ? note : response.data))
+    })
+  }
+  ```
+- Y la pasaremos como prop al objeto Note
+  ```jsx
+      <Note
+        key={i}
+        note={note} 
+        toggleImportance={() => toggleImportanceOf(note.id)}
+      />
+  ```
+  - La funcion require cmo parametro el id de la nota (lo obtenemos al resnderizarlo donde se muestran todas las notas)
+  - La funion find busca la nota por el id
+  - En changedNote cambiamos (spread) el atributo important, si es   true sera false o al contrario. Lo que hace realmetne es crear un nuevo objeto copiando todas las propiedades, luego el atributo importatn se cacmbiara a su crontrario
+- Hay que tener en  ceunta que hacemos na copia y no accedemos direntamte a un objeto que esta en el estado, lo que NO &#128121; SE PUEDE HACER 
+- El put envia la nue nota al servidor, despues en then actualizara segun a respusta la lista d notas. LA funcion map craea una copia del array notes, cuando enceuntra el objeto cambiado por su id lo sustituye por la respuesta del servidor (`response.data`)   
+
+### Refactorizar la comunicacion con el backend por separado 
+- Creamos un archivo `notes.js`en una carpeta nueva `src/services`
+  ```js
+  import axios from 'axios'
+  const baseUrl = 'http://localhost:3001/notes'
+
+  const getAll = () => {
+    const request = axios.get(baseUrl)
+    return request.then(response => response.data)
+  }
+
+  const create = newObject => {
+    const request = axios.post(baseUrl, newObject)
+    return request.then(response => response.data)
+  }
+
+  const update = (id, newObject) => {
+    const request = axios.put(`${baseUrl}/${id}`, newObject)
+    return request.then(response => response.data)
+  }
+
+  export default { 
+    getAll: getAll, 
+    create: create, 
+    update: update 
+  }
+  ```
+
+- Importamos el modulo en App, `import noteService from './services/notes'`
+- PAra usar las funciones del modulo se incvoca direntamte a la variable noteService. Ambiamos las funciones que realizan las llamadas al servidor en App 
+```jsx
+const App = () => {
+  // ...
+
+  useEffect(() => {
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        setNotes(initialNotes)
+      })
+  }, [])
+
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+  }
+
+  const addNote = (event) => {
+    event.preventDefault()
+    const noteObject = {
+      content: newNote,
+      important: Math.random() > 0.5
+    }
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
+        setNewNote('')
+      })
+  }
+  // ...
+}...
+```  
+### Optimizacion
+```jsx
+  export default { 
+    getAll: getAll, 
+    create: create, 
+    update: update 
+  }
+```
+- Esto se puede cambiar por esto
+```jsx
+export default { getAll, create, update }
+```
+- Ya que los nombres de las propiedades y los nombres de las variables son iguales (ES6)
+### GEstionar errores con las promesas
+- Si tuvieramos la opcion de elimiar lnotas podra darse la situacion de que un usuario quisiera cambiar la importancia de una nota que ya no existiera
+- Podemos ismularlo de esata amnaera:
+  ```jsx
+  const getAll = () => {
+    const request = axios.get(baseUrl)
+    const nonExisting = {
+      id: 10000,
+      content: 'This note is not saved to server',
+      important: true,
+    }
+    return request.then(response => response.data.concat(nonExisting))
+  }
+  ```
+- Si intentamos cambiaa rla importancia de esta nota, el servidor nos  da un mensaje de error 404 (Not Found)
+- ESto se puede gestionar con uno de los trres estados que devuelve una promesa
+- El rechazo se puede gestionar con el metodo `catch`. Se encadena al finalk de la promesa. Lo colocamos en la funcion que cambia la importancia de las notas
+  ```jsx
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote).then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+
+      .catch(error => {
+        alert(
+          `the note '${note.content}' was already deleted from server`
+        )
+        setNotes(notes.filter(n => n.id !== id))
+      })
+  }
+  ```
+- si aparece el error ,cmo en este caso semuestra una alerta: `'the note '${note.content}' was already deleted from server'`
+- Desepues se actuazlia el estado elimnado la nota rronea en `setNotes` mediante el metodo filter que busca los elemetnso que no tengan ese `id`
+- En veza de alert hay metodos mas elegantes de dar la inforamcion
+> [Principio d e responsabilida unica](https://es.wikipedia.org/wiki/Principio_de_responsabilidad_%C3%BAnica)   
+> [Promesas en cadena](https://es.javascript.info/promise-chaining)   
+> [You don't know JS](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)   
+> [You Don't Know JS: Async & Performance](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch3.md)   
+> [Promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises)
 ## e Estilos en React

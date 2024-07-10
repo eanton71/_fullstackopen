@@ -1,8 +1,9 @@
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
+import { useState, useEffect } from "react"; 
+import noteService from "./services/persons";
 
 const App = () => {
   //estado con array de personas
@@ -15,17 +16,15 @@ const App = () => {
   const [filter, setFilter] = useState("");
 
 /**
- * llamada a la base d datos json 
- * get locahost 3001 persons
- * then response a controlador de eventos
- * setPErsons actuzalizar render app
+ * llamada al servicio que se encarga de 
+ * comunicarse con la base dedatos 
+ * getAll: obtenemos toda la lista de peronsa
+ * setPErsons: actuzalizar estado y  render app
  */
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
-    });
+    noteService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
+      });
   }, []);
   console.log("render", persons.length, "persons");
 
@@ -43,14 +42,13 @@ const App = () => {
       //si no esta lo añadimos, no meter id
       const personObject = {
         name: newName,
-        number: newNumber,
-        //id: persons.length + 1,
+        number: newNumber 
       };
-    axios.post("http://localhost:3001/persons", personObject).then((response) => {
-      console.log(response);
-          setPersons(persons.concat(personObject));
-          setNewName("");
-          setNewNumber("");
+
+    noteService.create(personObject).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson));
+      setNewName("");
+      setNewNumber("");
     });
   
     }

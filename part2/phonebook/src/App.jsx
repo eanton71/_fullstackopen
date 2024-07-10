@@ -3,7 +3,7 @@ import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 
 import { useState, useEffect } from "react"; 
-import noteService from "./services/persons";
+import personService from "./services/persons";
 
 const App = () => {
   //estado con array de personas
@@ -22,7 +22,7 @@ const App = () => {
  * setPErsons: actuzalizar estado y  render app
  */
   useEffect(() => {
-    noteService.getAll().then((initialPersons) => {
+    personService.getAll().then((initialPersons) => {
       setPersons(initialPersons);
       });
   }, []);
@@ -45,7 +45,7 @@ const App = () => {
         number: newNumber 
       };
 
-    noteService.create(personObject).then((returnedPerson) => {
+    personService.create(personObject).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");
@@ -53,6 +53,15 @@ const App = () => {
   
     }
   };
+   const deletePerson = (id) => {
+     const person = persons.find((person) => person.id === id);
+     if (window.confirm(`${person.name} deleted`)) {
+       personService.erase(person.id).then((retPerson) => {
+         console.log(`${retPerson.name} deleted`);
+         setPersons(persons.filter((p) => p.id !== id));
+       });
+     }
+   };  
   /***
    * manejadores de eventos asociados al estado de los inputs
    */
@@ -88,7 +97,11 @@ const App = () => {
       <h2>Numbers</h2>
       {/*renderizar  array persons mediante map , prevismante hace un filtrado
       para que solo muestre los que coinciden con el input asociado al estado filter*/}
-      <Persons persons={persons} filter={filter} />
+      <Persons
+        persons={persons}
+        filter={filter}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };

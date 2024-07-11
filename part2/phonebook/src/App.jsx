@@ -100,7 +100,8 @@ const App = () => {
           notifyTimeout.sucess(DELAY, `User: ${retPerson.name} deleted`);
         })
         .catch((error) => {
-          notifyTimeout.error(DELAY, ` ${error}`);
+          console.log(error);
+          notifyTimeout.error(DELAY, `USer ${person.name} not exists, updating App render`);
           setPersons(persons.filter((p) => p.id !== id));
         });
       setPersons(persons.filter((p) => p.id !== id));

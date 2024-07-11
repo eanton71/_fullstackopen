@@ -653,3 +653,107 @@ export default { getAll, create, update }
 > [You Don't Know JS: Async & Performance](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch3.md)   
 > [Promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises)
 ## e Estilos en React
+- Desde el archivo index.css
+```css
+h1 {
+    color: green;
+    font-style: italic;
+}
+.note {
+    color: grey;
+    padding-top: 3px;
+    font-size: 15px;
+}
+```
+- `import "./index.css";` en el archivo `main.jsx`
+- Si queremos añadir una clase a un elemento tinee que ser con `className="note"`
+### Mensajes de error sin usar alert
+- Creamosun componenet `Notification`
+```jsx
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="error">
+      {message}
+    </div>
+  )
+}
+export default Notification;
+```
+- Añadimos un nuevo estado en `App`
+- `const [errorMessage, setErrorMessage] = useState('some error happened...')`
+- Inserrtamos la notificactcion en App
+```jsx
+  return (
+    <div>
+      <h1>Notes</h1>
+      <Notification message={errorMessage} />
+      <div>
+```
+- Agreagmos un estilo en index.css
+```css
+.error {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+```
+- Y configuramos la gestion e errores en las diferenets funciones. Por ejempplo en  `toggleImportanceOf`
+```jsx
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(changedNote).then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+      .catch(error => {
+
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        setNotes(notes.filter(n => n.id !== id))
+      })
+  }
+``` 
+### Estilos en linea
+- Para incluir estilo dentro de un componente se pueden incluir dentro de una variable que  se aplicara a cada elemento al que se quiera aplicar
+  ```jsx
+  const Footer = () => {
+    const footerStyle = {
+      color: 'green',
+      fontStyle: 'italic',
+      fontSize: 16
+    }
+    return (
+      <div style={footerStyle}>
+        <br />
+        <em>Note app, Department of Computer Science, University of Helsinki 2024</em>
+      </div>
+    )
+  }
+  const App = () => {
+      // ...
+    return (
+      <div>
+        <h1>Notes</h1>
+        <Notification message={errorMessage} />
+        // ...  
+        <Footer />
+      </div>
+    )
+  }
+  ``` 
+- No permiten el uso de pseudoclases
+- 

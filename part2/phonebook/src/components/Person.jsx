@@ -1,12 +1,12 @@
 const Person = ({ person, deletePerson }) => {
   console.log(person.id);
   return (
-    <p>
+    <li>
       {person.name} {person.number}{" "}
       <button type="submit" onClick={deletePerson}>
         delete
       </button>
-    </p>
+    </li>
   );
 };
 export default Person;

@@ -756,4 +756,66 @@ export default Notification;
   }
   ``` 
 - No permiten el uso de pseudoclases
-- 
+- No permiten el uso de variables de css
+- En REact se intenta intergrar el CSS para cada componente. CAda compponente define su HTML, su CSS y su comportamiento 
+### Observaciones
+#### Valores iniciales en estado 
+- El valor  inicial del estado puede dar problemas si no se define bien
+```jsx
+const [notes, setNotes] = useState([])
+```
+- Si en vez de array vacio `[]` lo iniciamos como `null` nos daria un error cuando lo quisieramos renderizar mediante `map` 
+- `notesToShow.map(note => ...)`estaria ejecutando esto, lo que nos daria error
+- otra opcion seria comprobar que notes existe (no es falsy: null, undefined, ...). Si es asi renderizar con map
+#### Segundo parametro de Use effect
+- Si es un array vacio `[]`el contenido cno cambia y el efcto se ejcuta despues del primer renderizado. Util para inicalizar el estado desde el servidor
+- En otras ocaciones neceesitamos el efecto de otra manera: por ejmplo si el componente cambia de una manera particular
+- Tenemos esta aplicacion que consulta esta [API de tasas de cambio](https://www.exchangerate-api.com/)
+```jsx
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const App = () => {
+  const [value, setValue] = useState('')
+  const [rates, setRates] = useState({})
+  const [currency, setCurrency] = useState(null)
+
+  useEffect(() => {
+    console.log('effect run, currency is now', currency)
+
+    // omitir si la moneda no está definida
+    if (currency) {
+      console.log('fetching exchange rates...')
+      axios
+        .get(`https://open.er-api.com/v6/latest/${currency}`)
+        .then(response => {
+          setRates(response.data.rates)
+        })
+    }
+  }, [currency])
+
+  const handleChange = (event) => {
+    setValue(event.target.value)
+  }
+
+  const onSearch = (event) => {
+    event.preventDefault()
+    setCurrency(value)
+  }
+
+  return (
+    <div>
+      <form onSubmit={onSearch}>
+        currency: <input value={value} onChange={handleChange} />
+        <button type="submit">exchange rate</button>
+      </form>
+      <pre>
+        {JSON.stringify(rates, null, 2)}
+      </pre>
+    </div>
+  )
+}
+
+export default App
+```
+- El segndo parametro e useEffect es `[currency]`. Ahhora la funcion se ejecuta tras el primer renderizado y cuando currency cambia

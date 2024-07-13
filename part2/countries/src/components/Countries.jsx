@@ -1,11 +1,17 @@
-const Countries = ({ countries }) => {
+
+
+const Countries = ({ countries, handleClick }) => {
   if (countries.length > 10) {
     return <p>Too many matches, specify another filter</p>;
-  } else if (countries.length === 1) {
-    return <h2>{countries[0].name}</h2>;
-  } else {
+  }else {
     return countries.map((country) => (
-      <div key="country.name">{country.name}</div>
+      <div key="country.name">
+        {country.name}
+        
+        <button type="submit" onClick={() => handleClick(country)}>
+          show
+        </button>
+      </div>
     ));
   }
 };

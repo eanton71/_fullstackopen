@@ -5,9 +5,9 @@ const Countries = ({ countries, handleClick }) => {
     return <p>Too many matches, specify another filter</p>;
   }else {
     return countries.map((country) => (
-      <div key="country.name">
+      <div key="country.id">
         {country.name}
-        
+
         <button type="submit" onClick={() => handleClick(country)}>
           show
         </button>

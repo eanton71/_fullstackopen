@@ -65,18 +65,20 @@
 `npm install json-server --save-dev`
 ##### Instalar axios
 - [Parte 2, configuracion JSON Server]()
-`npm install axios`
-Modificar `package.json`
-```json
-"scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "server": "json-server --port 3001 --watch db.json"
-  },
+- `npm install axios`
+- Modificar `package.json` para ejecuatar serrver
+  ```json
+  "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+      "preview": "vite preview",
+      "server": "json-server --port 3001 --watch db.json"
+    },
   ```
-
+#### Leer
+https://es.react.dev/learn/synchronizing-with-effects
+https://es.react.dev/reference/react/useEffect
 #### Problemas y soluciones
 
 ##### Posible mensaje de error

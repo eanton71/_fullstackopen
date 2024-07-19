@@ -818,4 +818,4 @@ const App = () => {
 
 export default App
 ```
-- El segndo parametro e useEffect es `[currency]`. Ahhora la funcion se ejecuta tras el primer renderizado y cuando currency cambia
+- El segundo parametro de useEffect es `[currency]`. Ahora la función se ejecuta tras el primer renderizado y cuando `currency` cambia

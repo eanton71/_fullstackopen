@@ -51,15 +51,41 @@
           - 2.15: comprobar que el nuevo usuario existe, si es aasi actuazliar nueevo numero
           - 2.16: mensajes de error con estilo
           - 2.17: gestionar errores en las promesas
-        - [part2/countries]()
+        - [part2/countries](https://github.com/eanton71/_fullstackopen/tree/main/part2/countries)
           - 2.18: aplicacion con información sobre paises. Obtener datos de [helsinki countries](https://studies.cs.helsinki.fi/restcountries/). Input con filtrado. Cuando el filtrado da <= 10 resultados, se muestran los nombres de paises. Cuando se da un resultado, muestra varios datos: capital, area, bandera, idiomas
           - 2.19: colocar un boton junto al nombre de cada pais  para mostar la información
           - 2.20: agregar info meteorologica . Por ejmplo [openweathermap](https://openweathermap.org/)
+3. [Programando un servidor con NodeJS y Express](doc/node_express.md)
+   - Ejercicios:
+     -  [part3/phonebook-backend]()
+        -  3.1:Servidor Node que retorne la lista de personas: http://localhost:3001/api/persons
+        -  3.2:Implementar pagna info: http://localhost:3001/info , horade solicitud, numeros de entaradas
+        -  3.3: mostrar una sola entrada de la agenda:http://localhost:3001/api/persons/5
+        -  3.4: 
+        -  3.5: 
+        -  3.6: 
+        -  3.7
+        -  3.8
+        -  3.9
+        -  3.10
+        -  3.11
+        -  3.12
+        -  3.13
+        -  3.14
+        -  3.15
+        -  3.16
+        -  3.17
+        -  3.18
+        -  3.19
+        -  3.20
+        -  3.21
+        -  3.22
+  
 
 
 #### Instalaciones
 ##### Crear aplicacion en React con Vite
-- [intro React](https://github.com/eanton71/_fullstackopen/blob/main/doc/intro_react.md#a---introduccion-a-react)   
+- [intro React](/doc/intro_react.md#a---introduccion-a-react)   
 ##### Instalar servidor JSON
 - [Parte 2, configuracion JSON Server]()
 `npm install json-server --save-dev`
@@ -76,6 +102,16 @@
       "server": "json-server --port 3001 --watch db.json"
     },
   ```
+#### Dotenv para guardar variabels de entorno
+- [variables de entorno en React](https://es.vitejs.dev/guide/env-and-mode.html)
+- Se guardan en erchivos .env en la raiz del proyecto
+```cmd
+VITE_SOME_KEY=54l41n3n4v41m34rv0
+
+```
+- Acceder edesde la aplicacion al valor
+- `const api_key = import.meta.env.VITE_SOME_KEY`
+- En el archivo .girignore por el `.env` para que no se suba al repositorio (INFORMACION SENSIBLE) &#9940;
 #### Leer
 https://es.react.dev/learn/synchronizing-with-effects
 https://es.react.dev/reference/react/useEffect

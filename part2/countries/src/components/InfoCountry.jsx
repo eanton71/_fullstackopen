@@ -10,7 +10,7 @@ const InfoCountry = ({ capital, area, languages, flag }) => {
       <strong>Languages: </strong>
       <ul>
         {languages.map((lang) => (
-          <li key='lang'>{lang}</li>
+          <li key={lang}>{lang}</li>
         ))}
       </ul>
       <br />
